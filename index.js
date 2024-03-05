@@ -15,7 +15,7 @@ const GENIUS_API_KEY = process.env.GENIUS_API_KEY;
 var app = express();
 app.use(
   cors({
-    origin: "https://tunestellar.vercel.app",
+    origin: ["https://tunestellar.vercel.app", "http://localhost:5173"],
   })
 );
 app.use(express.json());
