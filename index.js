@@ -15,7 +15,7 @@ const GENIUS_API_KEY = process.env.GENIUS_API_KEY;
 var app = express();
 app.use(
   cors({
-    origin: ["https://tunestellar.vercel.app", "http://localhost:5173"],
+    origin: ["https://tunestellar.vercel.app"],
   })
 );
 app.use(express.json());
@@ -127,18 +127,11 @@ app.get("/callback", (req, res) => {
 
 app.get("/auth/getTokens", (req, res) => {
   try {
-    res
-      .status(200)
-      .json({
-        access_token: process.env.ACCESS_TOKEN,
-        refresh_token: process.env.REFRESH_TOKEN,
-        expires_in: process.env.EXPIRES_IN,
-      })
-      .then(() => {
-        process.env.ACCESS_TOKEN = "";
-        process.env.REFRESH_TOKEN = "";
-        process.env.EXPIRES_IN = "";
-      });
+    res.status(200).json({
+      access_token: process.env.ACCESS_TOKEN,
+      refresh_token: process.env.REFRESH_TOKEN,
+      expires_in: process.env.EXPIRES_IN,
+    });
   } catch (err) {
     console.log("Error in /getTokens");
     console.log(err);
