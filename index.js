@@ -33,24 +33,8 @@ var generateRandomString = function (length) {
 
 const stateKey = "spotify_auth_state";
 
-app.get("/getLyrics", async (req, res) => {
-  const songName = req.query.songName;
-  const artist = req.query.artist;
-
-  const options = {
-    apiKey: GENIUS_API_KEY,
-    title: songName,
-    artist: artist,
-    optimizeQuery: true,
-  };
-
-  try {
-    const lyrics = await getLyrics(options);
-    res.json(lyrics);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: error.message });
-  }
+app.get("/", (req, res) => {
+  res.send("Tune Stellar backend is active...");
 });
 
 app.get("/login", (req, res) => {
@@ -181,6 +165,26 @@ app.get("/refresh_token", function (req, res) {
       console.error("Error refreshing access token:", error);
       res.status(500).send("Internal Server Error");
     });
+});
+
+app.get("/getLyrics", async (req, res) => {
+  const songName = req.query.songName;
+  const artist = req.query.artist;
+
+  const options = {
+    apiKey: GENIUS_API_KEY,
+    title: songName,
+    artist: artist,
+    optimizeQuery: true,
+  };
+
+  try {
+    const lyrics = await getLyrics(options);
+    res.json(lyrics);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.listen(port, () => {
